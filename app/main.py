@@ -35,3 +35,11 @@ async def upload_file(uid: str, filename: str, file: UploadFile = File(...)):
     with dest.open("wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     return {"msg": "Subido", "path": str(dest)}
+
+
+@app.get("/download/{filename}")
+async def download_file(filename: str):
+    file_path = PUBLIC / filename
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="Archivo no encontrado")
+    return FileResponse(file_path, filename=filename)

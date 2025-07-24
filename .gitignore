@@ -2,3 +2,6 @@
 
 .env
 env/*
+
+# No subir archivos generados por el seed
+app/sync_files/
