@@ -1,38 +1,14 @@
 version: "3.9"
 
 services:
-  synchro1:
+  synchro:
     build:
       context: .
       dockerfile: docker/Dockerfile
-    image: synchro-api
-    container_name: synchro1
+    deploy:
+      replicas: 10
+    ports:
+      - "8001-8010:8000"
     volumes:
       - ./app/sync_files:/usr/src/app/app/sync_files
-    ports:
-      - "8001:8000"
-    command:
-      ["/bin/sh","-c",
-       "/usr/src/app/docker/seed.sh & exec uvicorn main:app --host 0.0.0.0 --port 8000"]
-
-  synchro2:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
-    image: synchro-api
-    container_name: synchro2
-    volumes:
-      - ./app/sync_files:/usr/src/app/app/sync_files
-    ports:
-      - "8002:8000"
-
-  synchro3:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
-    image: synchro-api
-    container_name: synchro3
-    volumes:
-      - ./app/sync_files:/usr/src/app/app/sync_files
-    ports:
-      - "8003:8000"
+ 
